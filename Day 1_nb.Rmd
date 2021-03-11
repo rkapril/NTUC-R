@@ -1,0 +1,330 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+1+1
+2021^2
+```
+
+```{r}
+plot(1:10)
+hist(mtcars$mpg)
+?hist
+?plot
+?head
+```
+
+
+```{r}
+student <- "Samuel"
+age <- 31
+salary <- 3500.44
+attendance <- TRUE
+cancook <- FALSE
+print(student)
+```
+
+```{r}
+# use == to check for equality
+student == "Samuel"
+
+class(student)
+class(age)
+class(1:10)
+class(5)
+class(attendance)
+class(cancook)
+```
+
+```{r}
+hist(mtcars$mpg, main="Miles Per Gallon")
+```
+
+```{r}
+employer <- "NTUC"
+employer <- "Singtel"
+print(employer)
+```
+
+```{r}
+salaries <- c(3000, 5000, 2800)
+print(salaries)
+```
+
+```{r}
+print(salaries[1])
+print(salaries[2])
+print(salaries[3])
+```
+
+```{r}
+print(salaries[-3])
+```
+
+```{r}
+customers <- c("Toastbox", "Yakun", "Killiney", "Kopitiam")
+founded <- c(1999,1986,2000,1995)
+print(customers)
+print(founded)
+```
+
+```{r}
+joined <- c(customers, founded)
+print(joined)
+class(joined)
+```
+
+```{r}
+founded <- c(1999, 1986, 2000, 1995, "1986")
+print(founded)
+```
+
+```{r}
+length(customers)
+```
+
+```{r}
+suppliers <- c("NTUC", "Carrefour", "Giant")
+joined <- c(customers, suppliers)
+print(joined)
+```
+
+
+```{r}
+attendance <- c(FALSE, FALSE, TRUE, 1, 0, FALSE, TRUE)
+# explicit coercion
+attendance <- as.logical(attendance)
+print(attendance)
+```
+
+```{r}
+attendance <- c(FALSE, FALSE, TRUE, "1", "0", FALSE, TRUE)
+# your code here
+# your boss expectation: c(0,0,1,1,0,0,1)
+# your boss expect: class(attendance) is either integer / numeric
+
+attendance <- ifelse(attendance, 1 ,0)
+
+print(attendance)
+class(attendance)
+```
+
+```{r}
+copiers <- read.csv("https://raw.githubusercontent.com/onlyphantom/dsf2019/master/data_input/copiers.csv")
+head(copiers)
+```
+
+
+```{r}
+getwd()
+```
+
+```{r}
+tail(copiers)
+```
+
+```{r}
+today <- as.Date("2020-01-13", format="%Y-%m-%d")
+class(today)
+```
+
+```{r}
+# relative
+copiers <- read.csv("dsf2021_ntuc/dsf2021_ntuc/data_input/copiers.csv", 
+                    stringsAsFactors = FALSE)
+                    
+# data transformation
+copiers$Ship.Mode <- as.factor(copiers$Ship.Mode)
+copiers$Segment <- as.factor(copiers$Segment)
+copiers$Category <- as.factor(copiers$Category)
+copiers$Sub.Category <- as.factor(copiers$Sub.Category)
+
+copiers$Order.Date <- as.Date(copiers$Order.Date, format="%m/%d/%y")
+copiers$Ship.Date <- as.Date(copiers$Ship.Date, format="%m/%d/%y")
+
+# head shows the first 6 rows of data    
+str(copiers)
+# write.csv(copiers, "cleanedcopiers.csv")
+```
+
+```{r}
+getRversion()
+```
+```{r}
+sum(copiers$Profit)
+min(copiers$Profit)
+max(copiers$Profit)
+mean(copiers$Profit)
+median(copiers$Profit)
+summary(copiers$Profit)
+```
+
+```{r}
+round(fivenum(copiers$Profit),1)
+```
+
+```{r}
+summary(copiers$Profit)
+```
+
+```{r}
+summary(copiers$Ship.Mode)
+```
+
+
+```{r}
+summary(copiers$Segment)
+```
+
+```{r}
+copiers$Order.Month <- months(copiers$Order.Date)
+copiers$Order.Month <- as.factor(copiers$Order.Month)
+table(copiers$Order)
+summary(copiers$Order.Month)
+```
+
+```{r}
+copiers$Order.DOW <- as.factor(weekdays(copiers$Order.Date))
+str(copiers)
+```
+
+```{r}
+summary(copiers)
+```
+
+```{r}
+# number of rows
+nrow(copiers)
+
+# numer of columns
+ncol(copiers)
+
+# dimension
+dim(copiers)
+```
+
+```{r}
+summary(copiers$Profit)
+round(fivenum(copiers$Profit),1)
+```
+
+```{r}
+heights <- c(180, 200, 160, 300)
+sum(heights)/length(heights)
+mean(heights)
+median(c(180, 200, 160, 300))
+```
+
+```{r}
+plot(x=copiers$Sales)
+```
+
+```{r}
+# plot(x=copiers$Sales, y=copiers$Profit)
+# plot(y=copiers$Sales, x=copiers$Profit)
+plot(copiers$Sales, 
+     copiers$Profit, 
+     # main
+     main="Profit Analysis of Copiers", 
+     # color
+     col="firebrick",
+     # point character
+     pch=19,
+     # character expansion
+     cex=0.6
+     )
+```
+
+```{r}
+plot(copiers$Segment, 
+     copiers$Profit,
+     main="Customer Segment Analysis")
+```
+
+```{r}
+boxplot(mtcars$mpg)
+abline(h=median(mtcars$mpg), col="firebrick", lwd=3)
+abline(h=quantile(mtcars$mpg, 0.25), col="dodgerblue4", lwd=3)
+abline(h=quantile(mtcars$mpg, 0.75), col="dodgerblue4", lwd=3)
+abline(h=max(mtcars$mpg), col="green", lwd=3)
+abline(h=min(mtcars$mpg), col="green", lwd=3)
+```
+
+```{r}
+plot(x=copiers$Ship.Mode, y=copiers$Segment)
+```
+
+```{r}
+bl <- grep('blue', colors())
+colors()[bl]
+```
+
+```{r}
+head(mtcars)
+```
+
+```{r}
+model1 <- lm(mpg~hp, mtcars)
+
+str(mtcars)
+plot(x=mtcars$hp, 
+     y=mtcars$mpg,
+     xlab="Horsepower",
+     ylab="Miles Per Gallon",
+     pch=19, cex=0.6, col="goldenrod3")
+abline(model1$coef[1], model1$coef[2])
+# plot(y=mtcars$hp, 
+#      x=mtcars$mpg,
+#      main="Horsepower over Miles Per Gallon",
+#      pch=19,
+#      col="blue")
+```
+
+
+```{r}
+cor(mtcars$hp, mtcars$mpg)
+cor(mtcars$wt, mtcars$mpg)
+```
+
+```{r}
+cor(mtcars$mpg, mtcars$hp)
+cor(mtcars$mpg, mtcars$wt)
+```
+
+```{r}
+cor(mtcars)
+```
+
+```{r}
+# install.packages("GGally")
+require("GGally")
+ggcorr(cor(mtcars))
+```
+
+```{r}
+crime <- read.csv("crime.csv")
+cor(crime)
+```
+
+```{r}
+# install.packages("GGally")
+require("GGally")
+ggcorr(cor(crime))
+```
+
+
+
+
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

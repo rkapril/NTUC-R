@@ -1,0 +1,56 @@
+---
+title: "Assessment"
+output: html_document
+---
+
+```{r}
+# Data Exploration
+crime <- read.csv("crime.csv")
+head(crime)
+tail(crime)
+str(crime)
+```
+
+```{r}
+View(crime)
+```
+
+```{r}
+GGally::ggcorr(cor(crime))
+df <- data.frame(cor(crime))
+View(df)
+```
+
+```{r}
+model_crime <- lm(formula=crime_rate ~ police_exp59,
+             data=crime)
+coef(model_crime)
+summary(model_crime)
+```
+
+```{r}
+pred_df <- data.frame(police_exp59=c(120,58,105))
+predict(model_crime, pred_df)
+```
+
+```{r}
+9.222031*120+165.164241
+```
+
+```{r}
+plot(x=crime$police_exp59, y=crime$crime_rate,
+     pch=19, col='blue')
+abline(165.164241, 9.222031)
+```
+
+```{r}
+require(ggplot2)
+ggplot(data=crime, 
+                aes(x=police_exp59,
+                    y=crime_rate))+
+  geom_point(color='red', size=2)+
+  geom_smooth(method='loess', formula='y~x')+
+  theme_minimal()
+```
+
+
